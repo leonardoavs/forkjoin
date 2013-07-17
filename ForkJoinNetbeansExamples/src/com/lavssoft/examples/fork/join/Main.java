@@ -16,16 +16,19 @@ public class Main {
     public static void main(String[] args) {
         List<Comparable> ordenar = new ArrayList<>();
         
-        for (int i = 0; i < 20; i++) {
-            ordenar.add(1 + (int)(Math.random()* 200));
+        for (int i = 0; i < 100000; i++) {
+            ordenar.add(1 + (int)(Math.random()* 100));
         }
         
         System.out.println(ordenar);
+        System.out.println(ordenar.size());
         
-        System.out.println(ordenar(ordenar));
+        List<? extends Comparable> ordenar1 = ordenar(ordenar);
+        System.out.println(ordenar1);
+        System.out.println(ordenar1.size());
     }
     
-    private final static int LIMITE = 1;
+    private final static int LIMITE = 6;
     
     public static List<? extends Comparable> ordenar(List<? extends Comparable> order){
         if(order.size() == 1 || order.isEmpty()){
@@ -58,9 +61,25 @@ public class Main {
                         }
                         else if( compareResult == 0){
                             lista1.remove(0);
+                            //newList.add(lista1.remove(0));
                             newList.add(lista2.remove(0));
                         }
                         else{
+                            newList.add(lista1.remove(0));
+                        }
+                        
+                        if(lista1.size() > 0){
+                            elemento1 = lista1.get(0);
+                        }
+                        else{
+                            while( lista2.size() > 0 ){
+                                newList.add(lista2.remove(0));
+                            }
+                        }
+                    }
+                    
+                    if(lista2.isEmpty()){
+                        while( lista1.size() > 0 ){
                             newList.add(lista1.remove(0));
                         }
                     }
